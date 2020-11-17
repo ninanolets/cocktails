@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="album py-5">
+	<div class="container">
+    <div class="col-md-9 mx-auto p-0"> 
+      {% include 'partials/_alert.html' %}
+    </div>
+    <div class="col-md-12 mx-auto rounded border px-4 py-3 card-back-profi">
+      <div class="row px-3 align-items-center">
+        <img class="profi profi-pic" src="{{ profile.image.url }}">
+        <div class="ml-3 my-2">
+          <h3 class="border-bottom pb-2">
+            Posts by <strong>{{ profile.user.username }}</strong>
+          </h3>
+          <p class="mb-0">This user has {{ posts.count }} post{% if posts.count == 1 %}</p>{% else %}s</p>{% endif %}
+        </div>
+        
+      </div>
+      
+    </div>
+    
+
+    <div class="container">
+      <div class="pt-5">
+        <h3 class="h3-config-profi pb-2">Recipes</h3>
+        <div class="row pt-5">
+        
+          {% comment %} <!-- Profile cards --> {% endcomment %}
+          {% include 'partials/_profilecards.html' %}
+
+
+        </div>
+      </div>
+    </div>
+	</div>
+</div>
+
+{% comment %} <!-- Pagination --> {% endcomment %}
+{% include 'partials/_pagination.html' %}
+
+{% endblock %}

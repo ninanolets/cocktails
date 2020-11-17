@@ -1,0 +1,25 @@
+{% for post in posts %}
+<a class="no-link" href="{% url 'detail' post.id %}">
+  <div class="col-md-4 card-config">
+    <div class="card mb-4 shadow-sm main-card-config">
+      <img class="card-img-top fit filter" src="{{ post.image.url }}">
+      
+      <div class="card-body card-config-base">
+      
+          
+        <p class="card-text card-height">
+          <span class="text-title">{{ post }}</span>
+          <span class="text-sub-title">{{ post.costume_sub_title }}</span>
+        </p>
+        
+        <div class="align-items-end flex-column float-right">
+          <small>{{ post.costume_pub_date }}</small>
+          <a href="{% url 'detail' post.id %}"><img class="profi profi-pic-index ml-2" src="{{ post.user.profile.image.url }}"></a>
+        </div>
+        
+
+      </div>
+    </div>
+  </div>
+</a>
+{% endfor %} 

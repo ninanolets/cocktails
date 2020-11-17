@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% load static %}
+{% load humanize %}
+
+{% block content %}
+
+
+<section class="head text-center">
+	<div class="container text-box">
+		<h1 class="heading col-md-12 py-5">Cocktails</h1>
+		<p class="lead heading-secondary col-md-7 mx-auto pb-3">
+			Here you will find awesome coktail recipes posted by our lovely cocktails community. Definetely try this at home.. and happy cocktail!
+		</p>
+		<a href="{% url 'create' %}" class="btn btn-dark my-2 px-4 py-3 btn-main btn-animation"><b>Create your own</b></a>
+	</div>
+
+</section>
+
+
+<div class="album py-5">
+	<div class="container">
+		<h3 class="h3-config-profi pb-2">Recipes</h3>
+		<div class="row pt-5">
+
+          {% comment %} <!-- Profile cards --> {% endcomment %}
+          {% include 'partials/_profilecards.html' %}
+
+
+		</div>
+	</div>
+</div>
+
+{% comment %} <!-- Pagination --> {% endcomment %}
+{% include 'partials/_pagination.html' %}
+
+
+
+{% endblock %}
+
+
+
+							

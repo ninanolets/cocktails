@@ -1,0 +1,27 @@
+
+
+{% load static %}
+{% load humanize %}
+
+<div>
+	<div class="col-md-9 mx-auto detail-config my-4 p-5 rounded"> 
+		<p class="text-md-right p-0">This post has <b>{{ post.comments.count | intcomma }} comment{% if post.comments.count == 1 %}{% else %}s{% endif %}</b></p>
+		
+		{% include 'partials/_commentcreate.html' %}
+
+
+		{% for comment in post.comments.all %}
+		<div class="detail-config detail-config-comments my-4 p-4 rounded d-flex">
+			<div class="pr-4">
+				<a href="#"><img src="{% static 'img/heart.png' %}" class="logo" alt="upvote" height="30"></a>
+				<p class="mt-2 ml-2">4</p>
+			</div>
+			<div>
+				<small>Comment by: <b><a class="text-dark" href="{% url 'user-posts' comment.user %}">{{ comment.user }}</a></b></small>
+				<p class="mb-0 pt-3">{{ comment.body }}</p>
+				
+			</div>
+		</div>
+		{% endfor %}
+	</div>
+<div>

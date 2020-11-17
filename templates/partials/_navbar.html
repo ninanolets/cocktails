@@ -1,0 +1,56 @@
+{% load static %}
+<header>
+	<!-- TopBar -->
+	<div class="collapse bg-dark" id="navbarHeader">
+		<div class="container">
+			<div class="row">
+				<div class="col-sm-8 col-md-7 py-4">
+					<h4 class="text-warning">About</h4>
+					<p class="text-muted">It's a cocktail blog. You post a recipe and people can like your post and comment on it. Pretty simple. Made with Django + Python + Bootstrap + JS.</p>
+				</div>
+				<div class="col-sm-4 offset-md-1 py-4">
+					<h4 class="text-warning">Contact</h4>
+					<ul class="list-unstyled">
+						<li><a href="#" class="text-light">Send us an Email</a></li>
+						<li><a href="#" class="text-light">Find us on Facebook</a></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- NavBar -->
+	<div class="navbar navbar-dark bg-dark shadow-sm">
+		<div class="container justify-content-between p-0">
+			<a href="{% url 'index' %}" class="navbar-brand d-flex align-items-center text-warning">
+				<img src="{% static 'img/logo.png' %}" class="d-inline-block align-top pr-2" height="50">
+				<strong>Cocktails</strong>
+			</a>
+			<div class="text-white-50 align-self-center ml-auto">
+				{% if user.is_authenticated %}
+				
+				Welcome, <a class="no-link-only text-light pr-4" href="{% url 'profile' %}"> 
+					{% if user.first_name %}
+						{{ user.first_name }}
+					{% else %}
+						{{ user }}
+					{% endif %}
+				</a>
+			
+				<a class="no-link-only text-white-50 mr-3" href="{% url 'logout' %}">Log Out</a>
+
+				{% else %}
+				<a class="no-link-only text-warning pr-2" href="{% url 'register' %}">Sign Up</a>
+				<a class="no-link-only text-white-50 pr-3" href="{% url 'login' %}">Log In</a>
+				
+				{% endif %}
+				
+				<button class="navbar-toggler ml-auto my-3" type="button" data-toggle="collapse" data-target="#navbarHeader" aria-controls="navbarHeader" aria-expanded="false" aria-label="Toggle navigation">
+					<span class="navbar-toggler-icon"></span>
+				</button>
+
+			</div>
+			
+		</div>
+	</div>
+</header>

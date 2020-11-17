@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="reg-back">
+    <div class="container py-5"> 
+        <div class="col-md-9 mx-auto p-0"> 
+            {% include 'partials/_alert.html' %}
+        </div>
+        <div class="col-md-9 mx-auto rounded border px-5 py-4 card-back">
+            <form method="POST">
+                {% csrf_token %}
+                <fieldset class="form-group">
+                    <legend class="border-bottom mb-4 pb-2">Delete Post</legend>
+                    <h2>Are you sure you want to delete the post "{{ object.title }}"</h2>
+                </fieldset>
+
+                <section class="container">
+                    <div class="row">
+                        <div class="col-md-8 m-auto">
+                            <div class="card my-4 shadow-sm detail-card">
+                                
+                                <img class="card-img-top fit-detail" src="{{ post.image.url }}">
+
+                                <div class="card-body card-config-detail">
+                                        
+                                    <p class="card-text pb-3">
+                                        <span class="text-title text-title-detail pb-3">{{ post }}</span>
+                                        <span class="text-sub-title text-sub-title-detail pt-3">{{ post.sub_title }}</span>
+                                    </p>
+                                    <div class="float-right">
+                                        <small class="pos-text">{{ post.costume_pub_date }}</small>
+                                    </div>
+                                
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+
+                <div class="row pl-3 pb-3 mb-0">
+                    <button class="btn btn-danger" type="submit">Delete Post</button>
+                    <a class="btn btn-outline-secondary ml-3" href="{% url 'detail' object.id %}">Cancel</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+{% endblock %}

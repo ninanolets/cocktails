@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+
+<div class="reg-back">
+    <div class="container py-5"> 
+        <div class="col-md-9 mx-auto rounded border px-5 py-4 card-back">
+                <div class="form-group mb-0">
+					<h4 class="border-bottom pb-4">You have been logged out</h4>
+                    <small class="text-muted row pt-2 pl-3">
+                        Didn't mean to logout?<a class="px-2 rounded text-info" href="{% url 'login' %}">Log In</a>
+                    </small>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

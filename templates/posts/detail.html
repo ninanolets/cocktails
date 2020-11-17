@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+
+{% load static %}
+{% load humanize %}
+
+{% block content %}
+
+
+<div class="album pt-4">
+	<div class="container">
+		<div class="col-md-9 mx-auto p-0"> 
+		{% include 'partials/_alert.html' %}
+		</div>
+		<div class="col-md-9 mx-auto rounded border px-5 py-3">
+			<div class="row align-items-center">
+				<img class="profi profi-pic-detail mr-3" src="{{ post.user.profile.image.url }}">
+				<div class="">
+					<h6 class="border-bottom py-2">
+						This post was created by: <strong><a class="text-dark" href="{% url 'user-posts' post.user.username %}">{{ post.user }}</a></strong>
+					</h6>
+				</div>
+				<div class="ml-auto">
+				{% if post.user == request.user %}
+					<a class="btn btn-info py-0 px-3 mr-2 my-2" href="{% url 'post_update' post.pk %}">Edit Post</a>
+					<a class="btn btn-danger py-0 px-3 my-2" href="{% url 'post_delete' post.pk %}">Delete Post</a>
+				{% endif %}	
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<section class="container">
+	<div class="col-md-9 mx-auto detail-config my-4 p-5 rounded"> 
+		<div class="d-flex align-items-center mx-auto detail-heading">
+			<img class="detail-img mr-5" src="{{ post.image.url }}">
+			<div class="detail-title-box">
+				<h3 class="detail-title">{{ post }}</h3>
+				<h6 class="detail-sub pt-3">{{ post.sub_title }}</h6>
+				<div class="d-flex mt-3 justify-content-between detail-sub">
+					<div class="d-flex">
+						<a href="#"><img src="{% static 'img/heart.png' %}" class="logo" alt="upvote"></a>
+						<p class="ml-2">4 likes</p>
+					</div>
+				</div>
+		
+			</div>
+		</div>
+		<p class="detail-body">{{ post.body | linebreaksbr }} </p>
+	</div>
+
+	{% comment %} Comment section {% endcomment %}
+	{% include 'partials/_comments.html' %}
+	
+</section>
+
+
+
+
+
+
+{% endblock %}

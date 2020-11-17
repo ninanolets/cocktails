@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+<div class="reg-back">
+    <div class="container py-5"> 
+        <div class="col-md-9 mx-auto p-0"> 
+            {% include 'partials/_alert.html' %}
+        </div>
+        <div class="col-md-9 mx-auto rounded border px-5 py-4 card-back">
+            <form method="POST">
+                {% csrf_token %}
+                <fieldset class="form-group">
+                    <legend class="border-bottom mb-4 pb-2">Register here</legend>
+                    {{ form | crispy }}
+                </fieldset>
+                <div class="form-group pl-3 pt-4 mb-0">
+                    <button class="btn btn-warning row mb-3" type="submit">Sign Up</button>
+                    <small class="text-muted row pt-2 border-top">
+                        Already have an account?<a class="px-2 rounded text-info" href="{% url 'login' %}">Log In</a>
+                    </small>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+{% endblock %}

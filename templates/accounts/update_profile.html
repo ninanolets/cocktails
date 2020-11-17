@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+<div class="reg-back">
+
+    <div class="container py-5"> 
+
+        <div class="col-md-9 mx-auto rounded border px-5 py-4 card-back">
+            <div class="row align-items-center pb-3">
+                <img class="profi profi-pic" src="{{ user.profile.image.url }}">
+                <div class="ml-3 mt-2">
+                    <h3 class="border-bottom pb-2">
+                        {{ user.profile }}        
+                    </h3>
+                    <p class="mb-0">{{ user.email }}</p>
+                </div>
+
+            </div>   
+
+            <form method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                <fieldset class="form-group">
+                    <legend class="border-bottom mb-4 pb-2">Update your Profile</legend>
+                    {{ u_form | crispy }}
+                    {{ p_form | crispy }}
+                </fieldset>
+                <div class="form-group pl-3 pt-4 mb-0">
+                    <button class="btn btn-info row mb-3" type="submit">Update</button>
+                </div>
+            </form>
+            
+        </div> 
+    </div>
+</div>
+{% endblock %}
