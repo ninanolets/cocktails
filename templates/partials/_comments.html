@@ -1,5 +1,5 @@
 
-
+{% load crispy_forms_tags %}
 {% load static %}
 {% load humanize %}
 
@@ -7,21 +7,39 @@
 	<div class="col-md-9 mx-auto detail-config my-4 p-5 rounded"> 
 		<p class="text-md-right p-0">This post has <b>{{ post.comments.count | intcomma }} comment{% if post.comments.count == 1 %}{% else %}s{% endif %}</b></p>
 		
-		{% include 'partials/_commentcreate.html' %}
 
-
-		{% for comment in post.comments.all %}
-		<div class="detail-config detail-config-comments my-4 p-4 rounded d-flex">
-			<div class="pr-4">
-				<a href="#"><img src="{% static 'img/heart.png' %}" class="logo" alt="upvote" height="30"></a>
-				<p class="mt-2 ml-2">4</p>
+		
+		<!-- Create -->
+		<div class="py-3 px-4 mb-5 border-config-comm col-md-12 bg-white">
+			{% if user.is_authenticated %}	
+			<form id="form-id" data-id="{{ post.id }}" method="POST">
+				{% csrf_token %}
+				<fieldset class="form-group form-config">
+					<h5 class="border-bottom mb-4 py-2">Add comment:</h5>
+					{{ comment_form | crispy }}
+				</fieldset>
+				<div class="form-group pl-3 mb-0">
+					<button class="btn btn-warning row mb-2" name="comment" type="submit" value="comment">Comment</button>
+				</div>
+			</form>
+			{% else %}
+			<fieldset disabled class="form-group form-config">
+				<h5 class="border-bottom mb-4 py-2">Add comment:</h5>
+				<textarea class="textarea" type="textbox" name="comment_content" id="disabledTextInput" placeholder="Login to comment" style="height:130px; width:100%;"></textarea><br>
+			</fieldset>
+			<div class="form-group pl-3 mb-0">
+				<a class="btn btn-warning row mb-2" href="{% url 'login' %}?next=/post/{{ post.id }}">Log in to comment</a>
 			</div>
-			<div>
-				<small>Comment by: <b><a class="text-dark" href="{% url 'user-posts' comment.user %}">{{ comment.user }}</a></b></small>
-				<p class="mb-0 pt-3">{{ comment.body }}</p>
-				
-			</div>
+			{% endif %}
 		</div>
-		{% endfor %}
+		
+
+
+		<div class="comments">
+			{% for comment in post.comments.all %}
+				{% include 'partials/_comment.html' with comment=comment %}
+			{% endfor %}
+		</div>
+
 	</div>
 <div>

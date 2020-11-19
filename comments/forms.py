@@ -11,6 +11,8 @@ class CommentForm(forms.ModelForm):
         widgets = {
             'body': forms.Textarea(attrs={
                                     'rows': 5, 
-                                    'placeholder': 'Leave a comment here'
+                                    'placeholder': 'Leave a comment here',
+                                    'id': 'body-id',
+                                    'required': True,
             }),
         }

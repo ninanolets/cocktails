@@ -13,7 +13,15 @@ from accounts.models import Profile
 from comments.models import Comment
 from comments.forms import CommentForm
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
+import json
+from django.template.loader import render_to_string
+from django.contrib import messages
+from comments.views import CommentFormView
+from django.views import View
+from post_likes.views import PostLike
+from comment_likes.views import CommentLike
+
 
 
 class PostListView(ListView):
@@ -47,40 +55,53 @@ class UserListView(ListView):
     # you gotta update the context so it doesnt override all the context, 
     # just adds it
     def get_context_data(self, *args, **kwargs):
+       
         context = super().get_context_data(*args, **kwargs)
         user = self.get_object()
         profile = get_object_or_404(Profile, user=user) 
-        context.update({ 'profile': profile })
+        context['profile'] = profile
         return context
 
 
-class PostDetailView(DetailView):
+    
+
+class PostDisplay(DetailView):
     model = Post
     template_name = 'posts/detail.html'
-    ordering = ['-pub_date']
 
     # get the comment form to work on the Post detail
     def get_context_data(self, **kwargs):
-        data = super().get_context_data(**kwargs)
+        context = super().get_context_data(**kwargs)
         if self.request.user.is_authenticated:
-            data['comment_form'] = CommentForm(instance=self.request.user)
-        return data
-    
+            user = self.request.user
+            post = self.get_object()
+            
+            context['comment_form'] = CommentForm(instance=user)
+            context['has_liked_post'] = PostLike.objects.filter(post_id=post.id, user_id=user.id).exists()
+            context['has_liked_comment'] = CommentLike.objects.filter(user_id=user.id)
+        
+        return context
+        
+        
+
+class PostDetailView(View):
+
+    def get(self, request, *args, **kwargs):
+        view = PostDisplay.as_view()
+        return view(request, *args, **kwargs)
+
     def post(self, request, *args, **kwargs):
-        post = self.get_object()
-        new_comment = Comment(body=request.POST.get('body'), 
-                            user=self.request.user,
-                            post=post)
-        new_comment.save()
-        # avoid resubmit of data when refresh page with:
-        return HttpResponseRedirect(str(post.id))
-                   
+        view = CommentFormView.as_view()
+        return view(request, *args, **kwargs)
 
 class PostCreateView(LoginRequiredMixin, CreateView):
     model = Post
     template_name = 'posts/post_form.html'
-    fields = ['title', 'image', 'sub_title', 'body']
+    fields = ['title', 'sub_title', 'image', 'body']
 
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super().form_valid(form)
 
 class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Post

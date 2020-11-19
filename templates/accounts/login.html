@@ -17,7 +17,10 @@
                     {{ form | crispy }}
                 </fieldset>
                 <div class="form-group pl-3 pt-4 mb-0">
-                    <button class="btn btn-warning row mb-3" type="submit">Comment</button>
+                    <button class="btn btn-warning row mb-3" type="submit">Log In</button>
+                    <small class="text-muted row pt-2 border-top">
+                        Don't have an account?<a class="px-2 rounded text-info" href="{% url 'register' %}">Sign Up</a>
+                    </small>
                 </div>
             </form>
         </div>

@@ -16,7 +16,7 @@
 				<img class="profi profi-pic-detail mr-3" src="{{ post.user.profile.image.url }}">
 				<div class="">
 					<h6 class="border-bottom py-2">
-						This post was created by: <strong><a class="text-dark" href="{% url 'user-posts' post.user.username %}">{{ post.user }}</a></strong>
+						This post was created by: <strong><a class="text-dark" href="{% url 'user-posts' post.user %}">{{ post.user }}</a></strong>
 					</h6>
 				</div>
 				<div class="ml-auto">
@@ -32,16 +32,40 @@
 
 <section class="container">
 	<div class="col-md-9 mx-auto detail-config my-4 p-5 rounded"> 
-		<div class="d-flex align-items-center mx-auto detail-heading">
-			<img class="detail-img mr-5" src="{{ post.image.url }}">
-			<div class="detail-title-box">
+		<div class="row align-items-center mx-auto detail-heading">
+			<img class="col-md-5 detail-img mr-2 mb-4" src="{{ post.image.url }}">
+			<div class="col-md-6 detail-title-box" id="postlike">
 				<h3 class="detail-title">{{ post }}</h3>
 				<h6 class="detail-sub pt-3">{{ post.sub_title }}</h6>
-				<div class="d-flex mt-3 justify-content-between detail-sub">
-					<div class="d-flex">
-						<a href="#"><img src="{% static 'img/heart.png' %}" class="logo" alt="upvote"></a>
-						<p class="ml-2">4 likes</p>
+				<div id="postlike-{{post.id}}" class="d-flex mt-3 justify-content-between detail-sub">
+					<div class="d-flex py-1">
+
+					{% if user.is_authenticated %}
+					
+						<button class="btn-style" data-post-id="{{post.id}}">
+							<img src="{% static 'img/heart.png' %}" class="logo p-1
+							
+							{% if has_liked_post %}
+							bg-likes-after
+							{% else %}
+							{% endif %}
+							" alt="like">
+
+						</button>
+						
+						<p class="ml-2 mb-0 like-count">{{ post.postlikes.count | intcomma }}</p><p class="ml-2 mb-0"> like{% if comment.commentlikes.count == 1 %}s{% else %}{% endif %}</p>
+					
+					{% else %}
+
+						<a href="{% url 'login' %}?next=/post/{{ post.id }}">
+							<img src="{% static 'img/heart.png' %}" class="logo" alt="like">
+						</a>
+						
+						<p class="ml-2 mb-0">{{ post.postlikes.count | intcomma }}</p><p class="ml-2 mb-0"> like{% if comment.commentlikes.count == 1 %}s{% else %}{% endif %}</p>
+					
+					{% endif %} 
 					</div>
+
 				</div>
 		
 			</div>

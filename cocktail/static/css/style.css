@@ -82,7 +82,7 @@ main {
 .heading {
     font-size: 7vh;
     display: block;
-    font-weight: 400;
+    font-weight: 100;
     letter-spacing: 30px;
     text-transform: uppercase;   
     color: #333;
@@ -213,11 +213,12 @@ main {
 /* ******************************** */
 
 .detail-img {
+    border-radius: 10px;
     object-fit: cover;
     object-position: center; 
     height: 300px;
-    width: 40%;
-    border-radius: 10px;
+    /* width: 40%; */
+    
 }
 
 .card-config-detail { 
@@ -264,7 +265,7 @@ main {
     border-bottom: 2px dashed #E78200;
 }
 
-.detail-title-box { width: 45%; }
+/* .detail-title-box { width: 45%; } */
 
 .detail-title {
     display: block;
@@ -288,10 +289,23 @@ main {
     color: #693d03;
     line-height: 25px;
 }
-/* 
-.comm-config {
-    float: right;
-} */
+
+.bg-likes-after {
+    background-color: #E78200;
+    border-radius: 5px;
+    /* margin: 2px 5px; */
+}
+
+.btn-style {
+	background: none;
+	color: inherit;
+	border: none;
+    padding: 0;
+	font: inherit;
+	cursor: pointer;
+	outline: inherit;
+}
+
 
 
 /* FORM CONFIG */
