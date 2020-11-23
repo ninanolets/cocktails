@@ -19,14 +19,14 @@ def post_like2(request, pk):
     if postlike:
         postlike.delete()
         
-        res = {'isLiked': False}
+        res = {'isPostLiked': False}
         return HttpResponse(json.dumps(res), content_type="application/json")
     
     else:
         postlike = PostLike(post_id=pk, user_id=request.user.id)
         postlike.save()
         
-        res = {'isLiked': True}
+        res = {'isPostLiked': True}
 
         return HttpResponse(json.dumps(res), content_type="application/json")
 

@@ -1,36 +1,57 @@
-{% load static %}
-{% load humanize %}
+{% load static %} {% load humanize %}
 
-<div id="commentlike-{{comment.id}}" class="detail-config detail-config-comments my-4 p-4 rounded d-flex">
-    <div class="pr-4 ">
-        {% comment %} <a href="#"><img src="{% static 'img/heart.png' %}" class="logo" alt="upvote" height="30"></a> {% endcomment %}
-    
-        <button class="btn-style" data-comment-id="{{comment.id}}" data-post-id="{{comment.post.id}}">
-            <img src="{% static 'img/heart.png' %}" class="logo p-1
+<div
+  id="commentlike-{{comment.id}}"
+  class="detail-config detail-config-comments my-4 p-4 rounded d-flex"
+>
+  <div class="pr-4">
+    {% comment %}
+    <a href="#"
+      ><img
+        src="{% static 'img/heart.png' %}"
+        class="logo"
+        alt="upvote"
+        height="30"
+    /></a>
+    {% endcomment %}
 
-
-            {% for like in has_liked_comment %}
-                {% if comment.id == like.comment.id %}
-                bg-likes-after
-                {% else %}
-                {% endif %}
-            {% endfor %}
-			" alt="like">
-
-
-        </button>
-        <p class="mb-0 pt-2 text-center like-count">{{ comment.commentlikes.count }}</p>
-
+    <button
+      class="btn-style"
+      data-comment-id="{{comment.id}}"
+      data-post-id="{{comment.post.id}}"
+    >
+      <img
+        src="{% static 'img/heart.png' %}"
+        class="logo p-1 {% for like in has_liked_comment %} {% if comment.id == like.comment.id %} bg-likes-after {% else %} {% endif %} {% endfor %}"
+        alt="like"
+      />
+    </button>
+    <p class="mb-0 pt-2 text-center like-count">
+      {{ comment.commentlikes.count }}
+    </p>
+  </div>
+  <div class="w-100">
+    <div class="row justify-content-between">
+      <small class="col-md-6 mb-2"
+        >Comment by:
+        <b
+          ><a class="text-dark" href="{% url 'user-posts' comment.user %}"
+            >{{ comment.user }}</a
+          ></b
+        ></small
+      >
+      <small class="col-md-6 text-right"
+        >Posted {{ comment.pub_date | naturaltime }}</small
+      >
     </div>
-    <div class="w-100">
-        <div class="row justify-content-between">
-            <small class="col-md-6 mb-2">Comment by: <b><a class="text-dark" href="{% url 'user-posts' comment.user %}">{{ comment.user }}</a></b></small>
-            <small class="col-md-6 text-right">Posted {{ comment.pub_date | naturaltime }}</small>
-        </div>
-        <div id="talk-{{comment.id}}">
-            <p class="mb-0 pt-4 pr-4">{{ comment.body }}</p>
-        </div>
-        
+
+    <div id="talk-{{comment.id}}">
+      <p class="mb-0 pt-4 pr-4">{{ comment.body }}</p>
     </div>
+    {% if user.is_authenticated and comment.user == user %}
+    <div class="float-right">
+      <a class="no-link btn btn-secondary py-0 text-light" href="{% url 'delete_comment' comment.post.id comment.id %}">Delete</a>
+    </div>
+    {% endif %}
+  </div>
 </div>
-
