@@ -1,7 +1,10 @@
 from django.db import models
 from django.contrib.auth.models import User
-from datetime import datetime
 from django.urls import reverse
+
+from django.utils import timezone
+# from datetime import datetime
+
 
 class Post(models.Model):
     user = models.ForeignKey(User, on_delete=models.DO_NOTHING, null=True)
@@ -9,9 +12,12 @@ class Post(models.Model):
     sub_title = models.CharField(max_length=150, default=None)
     image = models.ImageField(default='thumbnail.jpeg', upload_to="photos/%Y/%m/%d/")
     body = models.TextField(default='')
-    pub_date = models.DateField(default=datetime.now, blank=True)
-    update_date = models.DateTimeField(default=datetime.now, blank=True)
+    pub_date = models.DateField(default=timezone.now, blank=True)
+    update_date = models.DateTimeField(default=timezone.now, blank=True)
     
+    class Meta:
+        ordering = ['-pub_date']
+
     def __str__(self):
         return self.title or ''
 
@@ -23,14 +29,4 @@ class Post(models.Model):
     
     def costume_pub_date(self):
         return self.pub_date.strftime('%b %e %Y')
-    
-    # def compare_pub_date(self):
-    #     return self.pub_date.strftime('%b %e %Y %H %M %S')
-    
-    # def compare_update_date(self):
-    #     return self.update_date.strftime('%b %e %Y %H %M %S')
-
-
-    def get_absolute_url(self):
-        return reverse("detail", kwargs={"pk": self.pk})
     
