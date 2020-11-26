@@ -30,3 +30,4 @@ class Post(models.Model):
     def costume_pub_date(self):
         return self.pub_date.strftime('%b %e %Y')
     
+    
